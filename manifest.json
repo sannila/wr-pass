@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "WR-Pass",
+  "version": "1.0.0",
+  "description": "A Chrome extension that save all password for Wild Republic",
+  "icons": {
+    "48": "icons/wrpass.png"
+  },
+  "action": {
+    "default_icon": "icons/wrpass.png",
+    "default_title": "WR-Pass",
+    "default_popup": "popup/popup.html"
+  },
+  "options_page": "option/option.html",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "alarms",
+    "notifications"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

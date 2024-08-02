@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WR-Pass</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h2>Welcome to WR-Pass</h2>
+      <form>
+        <div id="registeredEmailSection">
+          Hi, <span id="registeredEmail"></span>
+        </div>
+        <div id="emailField" class="column-layout">
+          <label for="emailId">Email ID:</label>
+          <input type="email" id="emailId" name="emailId" required />
+        </div>
+
+        <div id="passwordField" class="column-layout">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required />
+        </div>
+
+        <button type="submit" id="signInBtn">Submit</button>  
+      </form>
+      <div>
+        <a href="#" id="differentUserLink">Sign-in as different user</a>
+      </div>
+    </div>
+  </body>
+  <script src="popup.js"></script>
+</html>
