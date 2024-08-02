@@ -12,13 +12,26 @@ const registeredEmailSection = document.getElementById(
 signInBtn.addEventListener("click", () => {
   const emailValue = email.value;
   const passwordValue = password.value;
+  if (emailValue == "" || emailValue == null) {
+    alert("Please enter your email address");
+    return;
+  }
+  if (passwordValue == "" || passwordValue == null) {
+    alert("Please enter your password");
+    return;
+  }
+  const dateTime = new Date().toLocaleString();
 
-  chrome.storage.local.set({ emailValue, passwordValue }, () => {
-    console.log("Credentials saved");
+  chrome.storage.local.set({ emailValue, passwordValue, dateTime }, () => {
+    window.location = "../pages/index/index.html";
   });
 });
 
-chrome.storage.local.get(["emailValue", "passwordValue"], (res) => {
+chrome.storage.local.get(["emailValue", "passwordValue", "dateTime"], (res) => {
+  if (res.dateTime != undefined && res.dateTime != null && res.dateTime != "") {
+    //   document.getElementById('lastSignIn').innerHTML = 'Last sign in: '+res.dateTime;
+    window.location = "../pages/index/index.html";
+  }
   if (
     res.emailValue != undefined &&
     res.emailValue != null &&
