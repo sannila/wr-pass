@@ -14,9 +14,31 @@
             </span>
             <button id="logoutBtn" class="logout-button">Logout</button>
         </div>
+
+        <div class="list-section" id="showpassword_section">
+            <table id="match_dataList" class="data-list">
+                <thead>
+                    <tr>
+                        <th>URL</th>
+                        <th>User Name</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td id="url"></td>
+                        <td id="userName"></td>
+                        <td id="password"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <a href="#" id="showAllPassword">Show All Passwords</a>
+        <a href="#" id="hideAllPassword" style="display: none;">Hide All Passwords</a>
         
         <div class="list-section">
-            <table id="dataList" class="data-list">
+            <table id="dataList" class="data-list" style="display: none;">
                 <thead>
                     <tr>
                         <th>URL</th>

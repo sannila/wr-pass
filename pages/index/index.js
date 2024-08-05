@@ -1,50 +1,109 @@
 const logoutBtn = document.getElementById("logoutBtn");
 const loggedInUser = document.getElementById("loggedInUser");
 
-const data = [
-    {"url": "https://production-wrt-estore.amazepos.com/", "username": "superadmin", "password": "123456", "role": "admin"},
-    {"url": "https://staging-simcha-estore.amazepos.com/", "username": "superadmin", "password": "123456", "role": "admin"},
-    {"url": "https://staging-nczoo-estore.amazepos.com/", "username": "superadmin", "password": "123456", "role": "user"},
-    {"url": "https://development-dev-estore.amazepos.com/", "username": "superadmin", "password": "123456", "role": "admin"},
-    {"url": "https://development-dev.amazepos.com/", "username": "superadmin", "password": "123456", "role": "user"},
-]
+var data = [
+  {
+    url: "https://production-wrt-estore.amazepos.com/",
+    username: "superadmin",
+    password: "123456",
+    role: "admin",
+  },
+  {
+    url: "https://staging-simcha-estore.amazepos.com/",
+    username: "superadmin",
+    password: "123456",
+    role: "admin",
+  },
+  {
+    url: "https://staging-nczoo-estore.amazepos.com/",
+    username: "superadmin",
+    password: "123456",
+    role: "user",
+  },
+  {
+    url: "https://development-dev-estore.amazepos.com/",
+    username: "superadmin",
+    password: "123456",
+    role: "admin",
+  },
+  {
+    url: "https://development-dev.amazepos.com/",
+    username: "superadmin",
+    password: "123456",
+    role: "user",
+  },
+];
 
-const tableBody = document.getElementById('dataList').getElementsByTagName('tbody')[0];
+// When the current tab's url has password this will show here
+const showpassword_section = document.getElementById("match_dataList");
+const url = document.getElementById("url");
+const username = document.getElementById("username");
+const password = document.getElementById("password");
 
-function populateTable(){
-    tableBody.innerHTML = "";
-    data.forEach((item, index) => {
-        const newRow = tableBody.insertRow();
+chrome.storage.local.get(
+  ["showPassword", "url", "username", "password"],
+  (result) => {
+    console.log(result);
+    if (result.showPassword) {
+      showpassword_section.style.display = "";
+      url.textContent = result.url;
+      userName.textContent = result.username;
+      password.textContent = result.password;
+    } else {
+      showpassword_section.style.display = "none";
+    }
+  }
+);
 
-        const urlCell = newRow.insertCell(0);
-        const usernameCell = newRow.insertCell(1);
-        const passwordCell = newRow.insertCell(2);
-        const actionCell = newRow.insertCell(3);
+// When clicking showAllPassword
+const showAllPassword = document.getElementById("showAllPassword");
+const hideAllPassword = document.getElementById("hideAllPassword");
+const dataList = document.getElementById("dataList");
 
-        urlCell.textContent = item.url;
-        usernameCell.textContent = item.username;
-        passwordCell.textContent = item.password;
+showAllPassword.addEventListener("click", () => {
+  dataList.style.display = "";
+  hideAllPassword.style.display = "";
+  showAllPassword.style.display = "none";
+});
 
-        const deleteBtn = document.createElement("button");
-        deleteBtn.textContent = "Delete";
-        deleteBtn.className = "delete-button";
-        deleteBtn.addEventListener('click', () =>{
-            data.splice(index, 1);
-            populateTable();
-        });
+hideAllPassword.addEventListener("click", () => {
+  dataList.style.display = "none";
 
-        actionCell.appendChild(deleteBtn);
+  hideAllPassword.style.display = "none";
+  showAllPassword.style.display = "";
+});
+
+const tableBody = document
+  .getElementById("dataList")
+  .getElementsByTagName("tbody")[0];
+
+function populateTable() {
+  tableBody.innerHTML = "";
+  data.forEach((item, index) => {
+    const newRow = tableBody.insertRow();
+
+    const urlCell = newRow.insertCell(0);
+    const usernameCell = newRow.insertCell(1);
+    const passwordCell = newRow.insertCell(2);
+    const actionCell = newRow.insertCell(3);
+
+    urlCell.textContent = item.url;
+    usernameCell.textContent = item.username;
+    passwordCell.textContent = item.password;
+
+    const deleteBtn = document.createElement("button");
+    deleteBtn.textContent = "Delete";
+    deleteBtn.className = "delete-button";
+    deleteBtn.addEventListener("click", () => {
+      data.splice(index, 1);
+      populateTable();
     });
+
+    actionCell.appendChild(deleteBtn);
+  });
 }
 
 populateTable();
-
-
-chrome.storage.local.get(["emailValue"], (result) => {
-  if (result.emailValue) {
-    loggedInUser.innerHTML = result.emailValue;
-  }
-});
 
 logoutBtn.addEventListener("click", () => {
   // fetch('/logout', {

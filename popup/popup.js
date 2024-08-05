@@ -8,6 +8,22 @@ const registeredEmailSection = document.getElementById(
   "registeredEmailSection"
 );
 
+
+chrome.tabs.query(
+    {
+      currentWindow: true,
+    },
+    (tabs) => {
+      console.log(tabs);
+      tabs.forEach((tab) => {
+        if (tab.active == true) {
+          console.log("Active tab from popup js : " + tab.url);
+          chrome.storage.local.set({ tabUrl: tab.url });
+        }
+      });
+    }
+  );
+
 // Sign in Functionality
 signInBtn.addEventListener("click", () => {
   const emailValue = email.value;

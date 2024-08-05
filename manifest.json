@@ -17,7 +17,8 @@
     "tabs",
     "activeTab",
     "alarms",
-    "notifications"
+    "notifications",
+    "nativeMessaging"
   ],
   "background": {
     "service_worker": "background.js"
