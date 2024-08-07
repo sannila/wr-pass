@@ -8,24 +8,23 @@ const registeredEmailSection = document.getElementById(
   "registeredEmailSection"
 );
 
-
 chrome.tabs.query(
-    {
-      currentWindow: true,
-    },
-    (tabs) => {
-      console.log(tabs);
-      tabs.forEach((tab) => {
-        if (tab.active == true) {
-          console.log("Active tab from popup js : " + tab.url);
-          chrome.storage.local.set({ tabUrl: tab.url });
-        }
-      });
-    }
-  );
+  {
+    currentWindow: true,
+  },
+  (tabs) => {
+    console.log(tabs);
+    tabs.forEach((tab) => {
+      if (tab.active == true) {
+        console.log("Active tab from popup js : " + tab.url);
+        chrome.storage.local.set({ tabUrl: tab.url });
+      }
+    });
+  }
+);
 
 // Sign in Functionality
-signInBtn.addEventListener("click", () => {
+signInBtn.addEventListener("click", async () => {
   const emailValue = email.value;
   const passwordValue = password.value;
   if (emailValue == "" || emailValue == null) {
@@ -37,6 +36,12 @@ signInBtn.addEventListener("click", () => {
     return;
   }
   const dateTime = new Date().toLocaleString();
+
+  await fetch("http://localhost:3000/users", {mode: 'no-cors'}).then((res) =>
+    console.log("on successfull login " + res.body)
+  ).catch((err) =>
+    console.log("on errorfull login " + err)
+  );
 
   chrome.storage.local.set({ emailValue, passwordValue, dateTime }, () => {
     window.location = "../pages/index/index.html";

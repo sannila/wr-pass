@@ -34,8 +34,23 @@ var data = [
   },
 ];
 
+async function getUersList() {
+  await fetch('http://localhost:3000/users', {
+    mode: "no-cors",
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.text()).then((data) => console.log(data))
+    .catch((err) => console.log("index: on errorfull login " + err));
+}
+
+getUersList();
+
 // When the current tab's url has password this will show here
 const showpassword_section = document.getElementById("match_dataList");
+const noPasswordToShow = document.getElementById("noPasswordToShow");
 const url = document.getElementById("url");
 const username = document.getElementById("username");
 const password = document.getElementById("password");
@@ -46,11 +61,13 @@ chrome.storage.local.get(
     console.log(result);
     if (result.showPassword) {
       showpassword_section.style.display = "";
+      noPasswordToShow.style.display = "none";
       url.textContent = result.url;
       userName.textContent = result.username;
       password.textContent = result.password;
     } else {
       showpassword_section.style.display = "none";
+      noPasswordToShow.style.display = "";
     }
   }
 );
