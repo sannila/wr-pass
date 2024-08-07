@@ -1,8 +1,8 @@
 const logoutBtn = document.getElementById("logoutBtn");
 const loggedInUser = document.getElementById("loggedInUser");
 
-chrome.storage.local.get(['emailValue'], (res) => {
-  loggedInUser.innerHTML = res.emailValue;
+chrome.storage.local.get(['emailValue', 'role'], (res) => {
+  loggedInUser.innerHTML = res.emailValue + " - "+ res.role;
 })
 
 var data = [

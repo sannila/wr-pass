@@ -11,6 +11,7 @@ const registeredEmailSection = document.getElementById(
 const errorMessageSection = document.getElementById("errorMessageSection");
 const errorMessage = document.getElementById("errorMessage");
 
+// If the user already logged in navigate to the index page
 chrome.storage.local.get(["emailValue"], (res) => {
   if (res.emailValue != undefined && res.emailValue != null && res.emailValue != "") {
     //   document.getElementById('lastSignIn').innerHTML = 'Last sign in: '+res.dateTime;
@@ -99,7 +100,7 @@ signInBtn.addEventListener("click", async (e) => {
   } else {
     errorMessageSection.style.display = "none";
     errorMessage.innerHTML = "";
-    chrome.storage.local.set({ emailValue }, () => {
+    chrome.storage.local.set({ emailValue, role: content.role }, () => {
       window.location = "../pages/index/index.html";
     });
   }
