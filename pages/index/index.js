@@ -1,6 +1,10 @@
 const logoutBtn = document.getElementById("logoutBtn");
 const loggedInUser = document.getElementById("loggedInUser");
 
+chrome.storage.local.get(['emailValue'], (res) => {
+  loggedInUser.innerHTML = res.emailValue;
+})
+
 var data = [
   {
     url: "https://production-wrt-estore.amazepos.com/",

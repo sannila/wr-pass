@@ -8,48 +8,11 @@ const registeredEmailSection = document.getElementById(
   "registeredEmailSection"
 );
 
-chrome.tabs.query(
-  {
-    currentWindow: true,
-  },
-  (tabs) => {
-    console.log(tabs);
-    tabs.forEach((tab) => {
-      if (tab.active == true) {
-        console.log("Active tab from popup js : " + tab.url);
-        chrome.storage.local.set({ tabUrl: tab.url });
-      }
-    });
-  }
-);
+const errorMessageSection = document.getElementById("errorMessageSection");
+const errorMessage = document.getElementById("errorMessage");
 
-// Sign in Functionality
-signInBtn.addEventListener("click", async () => {
-  const emailValue = email.value;
-  const passwordValue = password.value;
-  if (emailValue == "" || emailValue == null) {
-    alert("Please enter your email address");
-    return;
-  }
-  if (passwordValue == "" || passwordValue == null) {
-    alert("Please enter your password");
-    return;
-  }
-  const dateTime = new Date().toLocaleString();
-
-  await fetch("http://localhost:3000/users", {mode: 'no-cors'}).then((res) =>
-    console.log("on successfull login " + res.body)
-  ).catch((err) =>
-    console.log("on errorfull login " + err)
-  );
-
-  chrome.storage.local.set({ emailValue, passwordValue, dateTime }, () => {
-    window.location = "../pages/index/index.html";
-  });
-});
-
-chrome.storage.local.get(["emailValue", "passwordValue", "dateTime"], (res) => {
-  if (res.dateTime != undefined && res.dateTime != null && res.dateTime != "") {
+chrome.storage.local.get(["emailValue"], (res) => {
+  if (res.emailValue != undefined && res.emailValue != null && res.emailValue != "") {
     //   document.getElementById('lastSignIn').innerHTML = 'Last sign in: '+res.dateTime;
     window.location = "../pages/index/index.html";
   }
@@ -69,6 +32,85 @@ chrome.storage.local.get(["emailValue", "passwordValue", "dateTime"], (res) => {
     registeredEmailSection.style.display = "none";
     return;
   }
+});
+
+chrome.tabs.query(
+  {
+    currentWindow: true,
+  },
+  (tabs) => {
+    console.log(tabs);
+    tabs.forEach((tab) => {
+      if (tab.active == true) {
+        console.log("Active tab from popup js : " + tab.url);
+        chrome.storage.local.set({ tabUrl: tab.url });
+      }
+    });
+  }
+);
+
+// Sign in Functionality
+signInBtn.addEventListener("click", async (e) => {
+  e.preventDefault();
+  const emailValue = email.value;
+  const passwordValue = password.value;
+  if (emailValue == "" || emailValue == null) {
+    alert("Please enter your email address");
+    return;
+  }
+  if (passwordValue == "" || passwordValue == null) {
+    alert("Please enter your password");
+    return;
+  }
+  const dateTime = new Date().toLocaleString();
+
+  var payload = { email: emailValue, password: passwordValue };
+  // var updatedData = JSON.stringify(data);
+  // await fetch("http://localhost:3000/users/login", {
+  //   mode: "no-cors",
+  //   cache: "no-cache",
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json", Accept: "application/json" },
+  //   body: payload,
+  // })
+  //   .then((response) => {
+  //     console.log("Success from login");
+  //     console.log(response);
+  //   })
+  //   .catch((e) => {
+  //     console.log("Error from login");
+  //     console.log(e);
+  //   });
+
+  const rawResponse = await fetch("http://localhost:3000/users/login", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+  const content = await rawResponse.json();
+  if (content.errorCode === 4001) {
+    // alert(content.message);
+    errorMessageSection.style.display = "";
+    errorMessage.innerHTML = content.message;
+    return;
+  } else {
+    errorMessageSection.style.display = "none";
+    errorMessage.innerHTML = "";
+    chrome.storage.local.set({ emailValue }, () => {
+      window.location = "../pages/index/index.html";
+    });
+  }
+
+  // await fetch("http://localhost:3000/users/register", {
+  //   mode: "no-cors",
+  //   method: "POST",
+  //   headers: { "Content-Type": "application/json" },
+  // })
+  //   .then((res) => console.log("on successfull login " + res.body))
+  //   .catch((err) => console.log("on errorfull login " + err));
 });
 
 differentUserLink.addEventListener("click", () => {
