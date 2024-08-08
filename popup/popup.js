@@ -66,22 +66,6 @@ signInBtn.addEventListener("click", async (e) => {
   const dateTime = new Date().toLocaleString();
 
   var payload = { email: emailValue, password: passwordValue };
-  // var updatedData = JSON.stringify(data);
-  // await fetch("http://localhost:3000/users/login", {
-  //   mode: "no-cors",
-  //   cache: "no-cache",
-  //   method: "POST",
-  //   headers: { "Content-Type": "application/json", Accept: "application/json" },
-  //   body: payload,
-  // })
-  //   .then((response) => {
-  //     console.log("Success from login");
-  //     console.log(response);
-  //   })
-  //   .catch((e) => {
-  //     console.log("Error from login");
-  //     console.log(e);
-  //   });
 
   const rawResponse = await fetch("http://localhost:3000/users/login", {
     method: "POST",
@@ -91,6 +75,7 @@ signInBtn.addEventListener("click", async (e) => {
     },
     body: JSON.stringify(payload),
   });
+  
   const content = await rawResponse.json();
   if (content.errorCode === 4001) {
     // alert(content.message);
