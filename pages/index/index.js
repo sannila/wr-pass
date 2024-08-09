@@ -127,23 +127,6 @@ function populateTable() {
 populateTable();
 
 logoutBtn.addEventListener("click", () => {
-  // fetch('/logout', {
-  //     method: 'POST',
-  //     headers: {
-  //         'Content-Type': 'application/json'
-  //     }
-  // })
-  // .then(response => {
-  //     if (response.ok) {
-  //         window.location.href = '/';
-  //     } else {
-  //         console.error('Failed to logout');
-  //     }
-  // })
-  // .catch(error => {
-  //     console.error('Error:', error);
-  // });
-
   chrome.storage.local.remove(["dateTime", "emailValue"], () => {
     console.log("dateTime removed from local storage");
     window.location = "../../popup/popup.html";

@@ -9,8 +9,16 @@
   <body>
     <div class="header">
       <button class="back-button" id="backBtn">Back</button>
+      <button
+        class="credentialList-button"
+        id="credentialListbtn"
+        type="button"
+      >
+        Credential List
+      </button>
+      <button class="logout-button" id="logoutBtn">Logout</button>
     </div>
-    <div class="container">
+    <div class="container" id="new_credential">
       <h1>Add New URL</h1>
       <div class="form-container">
         <div id="errorMessageSection">
@@ -38,6 +46,28 @@
           </div>
           <button type="submit" class="action-button" id="addBtn">Add</button>
         </form>
+      </div>
+    </div>
+    <div class="container" id="list_credential" style="display: none">
+      <h1>Credential List</h1>
+      <div class="list-section">
+        <table id="dynamicTable">
+          <thead>
+            <tr>
+              <th>Website URL</th>
+              <th>Username</th>
+              <th>Password</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dynamic rows will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+      <div id="loading">
+        <p>Loading...</p>
       </div>
     </div>
   </body>

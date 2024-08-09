@@ -1,7 +1,14 @@
 const backBtn = document.getElementById("backBtn");
+const logoutBtn = document.getElementById('logoutBtn');
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const addBtn = document.getElementById("addBtn");
+
+logoutBtn.addEventListener('click', () =>{
+    chrome.storage.local.remove(['emailValue', 'role'], () =>{
+        window.close();
+    });
+});
 
 backBtn.addEventListener("click", () => {
   window.history.back();
