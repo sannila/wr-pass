@@ -47,5 +47,7 @@ addBtn.addEventListener("click", async (e) => {
 
   errorMessageSection.style.display = "";
   errorMessage.innerHTML = "User Registered Successfully";
+  email.value = "";
+  passwordValue.value = "";
   return;
 });

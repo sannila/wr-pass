@@ -1,38 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Add New URL</title>
-    <link rel="stylesheet" href="url.css">
-</head>
-<body>
+    <link rel="stylesheet" href="url.css" />
+  </head>
+  <body>
     <div class="header">
-        <button class="back-button" id="backBtn">Back</button>
+      <button class="back-button" id="backBtn">Back</button>
     </div>
     <div class="container">
-        <h1>Add New URL</h1>
-        <div class="form-container">
-            <form id="add-user-form">
-                <div class="form-group">
-                    <label for="website">Website URL:</label>
-                    <input type="website" id="website" name="website" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="role">Role:</label>
-                    <select id="role" name="role" required>
-                        <option value="admin">Admin</option>
-                        <option value="user">User</option>
-                    </select>
-                </div>
-                <button type="submit" class="action-button">Add</button>
-            </form>
+      <h1>Add New URL</h1>
+      <div class="form-container">
+        <div id="errorMessageSection">
+          <span id="errorMessage" style="color: red; font-weight: bold"></span>
         </div>
+        <form id="add-user-form">
+          <div class="form-group">
+            <label for="website">Website URL:</label>
+            <input type="website" id="website" name="website" required />
+          </div>
+          <div class="form-group">
+            <label for="userName">User Name:</label>
+            <input type="userName" id="userName" name="userName" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <div class="form-group">
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+              <option value="admin">Admin</option>
+              <option value="user">User</option>
+            </select>
+          </div>
+          <button type="submit" class="action-button" id="addBtn">Add</button>
+        </form>
+      </div>
     </div>
-</body>
-<script src="url.js"></script>
+  </body>
+  <script src="url.js"></script>
 </html>
