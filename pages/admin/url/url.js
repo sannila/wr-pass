@@ -103,14 +103,9 @@ credentialListBtn.addEventListener("click", async () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("credential list:");
         credential_data = data;
-        console.log(credential_data);
-        // Create table to list the credential data
-
         // Call the function to populate the table
         createTableRows(credential_data);
-
         loading.style.display = "none";
         return
       });
@@ -126,7 +121,7 @@ credentialListBtn.addEventListener("click", async () => {
 const tableBody = document.querySelector("#dynamicTable tbody");
 
 function createTableRows(data) {
-  data.forEach((item) => {
+  data.forEach((item, index) => {
     const row = document.createElement("tr");
 
     const websiteCell = document.createElement("td");

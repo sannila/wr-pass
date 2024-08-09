@@ -9,9 +9,16 @@
   <body>
     <div class="header">
       <button class="back-button" id="backBtn">Back</button>
+      <button
+        class="userList-button"
+        id="userListbtn"
+        type="button"
+      >
+        User List
+      </button>
       <button class="logout-button" id="logoutBtn">Logout</button>
     </div>
-    <div class="container">
+    <div class="container" id="new_user">
       <h1>Add New User</h1>
       <div class="form-container">
         <div id="errorMessageSection">
@@ -35,6 +42,27 @@
           </div>
           <button type="submit" class="action-button" id="addBtn">Add</button>
         </form>
+      </div>
+    </div>
+    <div class="container" id="list_user" style="display: none">
+      <h1>User List</h1>
+      <div class="list-section">
+        <table id="dynamicTable">
+          <thead>
+            <tr>
+              <th>Email</th>
+              <th>Password</th>
+              <th>Role</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Dynamic rows will be inserted here -->
+          </tbody>
+        </table>
+      </div>
+      <div id="loading">
+        <p>Loading...</p>
       </div>
     </div>
   </body>
