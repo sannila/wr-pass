@@ -1,85 +1,104 @@
-var data = [
-  {
-    url: "https://production-wrt-estore.amazepos.com/",
-    username: "superadmin",
-    password: "123456",
-    role: "admin",
-  },
-  {
-    url: "https://staging-simcha-estore.amazepos.com/",
-    username: "superadmin",
-    password: "123456",
-    role: "admin",
-  },
-  {
-    url: "https://staging-nczoo-estore.amazepos.com/",
-    username: "superadmin",
-    password: "123456",
-    role: "user",
-  },
-  {
-    url: "https://development-dev-estore.amazepos.com/",
-    username: "superadmin",
-    password: "123456",
-    role: "admin",
-  },
-  {
-    url: "https://development-dev.amazepos.com/",
-    username: "superadmin",
-    password: "123456",
-    role: "user",
-  },
-];
+var website_data = [];
 
-chrome.tabs.onActivated.addListener((activeInfo) => {
+// get credentials on new tab
+chrome.tabs.onActivated.addListener(async (activeInfo) => {
   chrome.storage.local.set({
     showPassword: false,
   });
-  chrome.tabs.get(activeInfo.tabId, (tab) => {
-    console.log("Active tab from background js" + tab.url);
-    data.forEach((url) => {
-      const dataURL = url.url.split("/");
-      const tabURL = tab.url.split("/");
-      if (dataURL[2] == tabURL[2]) {
-        // this.registration.showNotification("WR-Pass", {
-        //   body: "You are logged in as " + url.role,
-        //   icon: "icon.png",
-        // });
-        chrome.storage.local.set({
-          showPassword: true,
-          url: url.url,
-          username: url.username,
-          password: url.password,
-          role: url.role,
-        });
-      }
+
+  /**
+   *
+   * Get credential data from API endpoint
+   * and assign to [data]
+   * */
+
+  chrome.storage.local.get(["emailValue"], async (result) => {
+    if (result.emailValue === undefined) {
+      return;
+    }
+    await fetch("http://localhost:3000/credentials", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("credential list");
+        console.log(data);
+        website_data = data;
+        return;
+      });
+
+    chrome.tabs.get(activeInfo.tabId, (tab) => {
+      console.log("Active tab from background js" + tab.url);
+
+      website_data.forEach((url) => {
+        const dataURL = url.WebsiteURL.split("/");
+        const tabURL = tab.url.split("/");
+        if (dataURL[2] == tabURL[2]) {
+          // this.registration.showNotification("WR-Pass", {
+          //   body: "You are logged in as " + url.role,
+          //   icon: "icon.png",
+          // });
+          chrome.storage.local.set({
+            showPassword: true,
+            data: url,
+          });
+        }
+      });
     });
   });
 });
 
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+// Get details when updating or re-loading the url
+chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
   chrome.storage.local.set({
     showPassword: false,
   });
-  if (changeInfo.status === "complete") {
-    data.forEach((url) => {
-      const dataURL = url.url.split("/");
-      const tabURL = tab.url.split("/");
-      if (dataURL[2] == tabURL[2]) {
-        // this.registration.showNotification("WR-Pass", {
-        //   body: "URL is updated",
-        //   icon: "icon.png",
-        // });
-        chrome.storage.local.set({
-          showPassword: true,
-          url: url.url,
-          username: url.username,
-          password: url.password,
-          role: url.role,
-        });
-      }
-    });
-  }
+
+  /**
+   *
+   * Get credential data from API endpoint
+   * and assign to [data]
+   * */
+  chrome.storage.local.get(["emailValue"], async (result) => {
+    if (result.emailValue === undefined) {
+      return;
+    }
+    await fetch("http://localhost:3000/credentials", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("credential list");
+        console.log(data);
+        website_data = data;
+        return;
+      });
+
+    if (changeInfo.status === "complete") {
+      website_data.forEach((url) => {
+        const dataURL = url.WebsiteURL.split("/");
+        const tabURL = tab.url.split("/");
+        if (dataURL[2] == tabURL[2]) {
+          // this.registration.showNotification("WR-Pass", {
+          //   body: "URL is updated",
+          //   icon: "icon.png",
+          // });
+          chrome.storage.local.set({
+            showPassword: true,
+            data: url,
+          });
+        }
+      });
+    }
+  });
 });
 
 // chrome.tabs.query(
