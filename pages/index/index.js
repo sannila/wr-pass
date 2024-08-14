@@ -112,5 +112,6 @@ logoutBtn.addEventListener("click", () => {
 copy_action_btn.addEventListener("click", () => {
   chrome.storage.local.get(["data"], (result) => {
     navigator.clipboard.writeText(result.data.Password);
+    document.getElementById("copy_error").innerHTML = "Password copied to clipboard";
   })
 });
