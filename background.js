@@ -25,9 +25,8 @@ chrome.tabs.onActivated.addListener(async (activeInfo) => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log("credential list");
-        console.log(data);
         website_data = data;
+        chrome.storage.local.set({credentialList: data})
         return;
       });
 
