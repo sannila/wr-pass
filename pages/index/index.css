@@ -13,6 +13,7 @@ body {
   height: 200px;
   width: 400px;
   margin: 0;
+  border-radius: 10px;
 }
 
 .container {
@@ -80,16 +81,18 @@ body {
 }
 
 .url_cl {
-  border: 1px solid black;
+  border: 0.5px solid rgb(255, 220, 114);
   border-radius: 5px;
   padding: 5px;
+  background-color: rgb(241, 231, 201);
 }
 
 .userName_cl,
 .copy_action_cl {
-  border: 1px solid black;
+  border: 0.5px solid rgb(255, 247, 130);
   border-radius: 5px;
   padding: 5px;
+  background-color: rgb(238, 234, 184);
 }
 
 .copy_message {
@@ -97,4 +100,9 @@ body {
   margin-top: 10px;
   font-weight: bold;
   color: rgb(112, 155, 13);
+}
+
+.justify-content-between {
+  padding-left: 5px !important;
+  padding-right: 5px !important;
 }

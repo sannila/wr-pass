@@ -116,7 +116,11 @@ logoutBtn.addEventListener("click", () => {
 
 // copy the passwords
 copy_action_btn.addEventListener("click", () => {
-  chrome.storage.local.get(["data"], (result) => {
+  chrome.storage.local.get(["data" ,"role"], (result) => {
+    if(result.role != "admin"){
+      document.getElementById("copy_message").innerHTML = "No permission to copy";  
+      return;
+    }
     navigator.clipboard.writeText(result.data.Password);
     document.getElementById("copy_message").innerHTML = "Password copied to clipboard";
   })
